@@ -28,6 +28,14 @@ app.post('/search', function (req, res) {
   });
 });
 
+app.post('/tweet', function (req, res) {
+  twit.post('statuses/update', req.body, function (error, tweet, response) {
+    if (!error) {
+      return res.send(tweet);
+    }
+  });
+});
+
 // Fire this bitch up (start our server)
 var server = http.createServer(app).listen(port, function () {
   console.log('Express server listening on port ' + port);
@@ -37,6 +45,6 @@ var server = http.createServer(app).listen(port, function () {
 var io = require('socket.io').listen(server);
 
 // Set a stream listener for tweets matching tracking keywords
-twit.stream('statuses/filter', { track: 'javascript' }, function (stream) {
+twit.stream('statuses/filter', { track: '#nowplaying' }, function (stream) {
   streamHandler(stream, io);
 });
