@@ -1,6 +1,7 @@
 module.exports = function (stream, io) {
 
-  // When tweets get sent our way ...
+
+  // Send New Tweet via Websocket to the frontend
   stream.on('data', function (data) {
     if (data['user'] !== undefined) {
       io.emit('tweet', data);
